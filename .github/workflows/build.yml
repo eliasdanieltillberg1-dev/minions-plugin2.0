@@ -1,5 +1,7 @@
 name: Build plugin jar
 
+# Runs automatically whenever you upload/push files to this repo, and can
+# also be started by hand from the "Actions" tab ("Run workflow" button).
 on:
   push:
   workflow_dispatch:
