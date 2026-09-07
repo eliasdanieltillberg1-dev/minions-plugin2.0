@@ -1,0 +1,94 @@
+# =====================================================================
+#  Minions plugin config
+#
+#  Economy hookup: this plugin does NOT keep its own separate Credits/
+#  Money balance. It reads and writes the SAME Skript variables your
+#  existing RollEco.sk economy already uses (geco::credits::<uuid> and
+#  geco::money::<uuid>) via reflection into Skript's own Variables API
+#  (see SkriptBridge.java) - buying a minion here spends the exact same
+#  Credits shown in /store, and minion income lands in the exact same
+#  Money balance Roll income does. Skript must be installed and loaded
+#  for this to work; if Skript somehow isn't present, the bridge fails
+#  safe (logs a warning, treats balances as 0 / writes are no-ops)
+#  rather than throwing.
+#
+#  Head textures: I don't have a way to fetch real custom head textures
+#  from here, so every minion type below ships with an EMPTY texture -
+#  it'll just show a plain default (Steve) head in-game until you fill
+#  one in. To customize: go to a site like minecraft-heads.com, find a
+#  head you like, copy its base64 "Value" (NOT the short numeric ID -
+#  the long base64 blob), and paste it as the texture for that type
+#  below, then run /minionsreload (or restart). No recompiling needed.
+# =====================================================================
+
+# how often (in seconds) every placed minion pays its owner
+income-interval-seconds: 60
+
+# merchant stock
+restock-seconds: 300
+refresh-cost: 10
+min-stock-quantity: 1
+max-stock-quantity: 5
+stock-slots: 5
+
+# per-player cap on simultaneously PLACED minions
+max-active-minions: 10
+
+# permission required for /merchant - "op only" per the original request
+merchant-permission: "rolleco.admin"
+
+# Money income per tier (1-30), index 0 = tier 1. Same shape as the
+# original Skript version's table (10 at tier 1 up to 10,000 at tier
+# 30) - a starting point, not balanced against your actual economy.
+tier-income:
+  [10, 15, 20, 30, 40, 50, 70, 90, 120, 150,
+   190, 240, 300, 380, 470, 580, 720, 890, 1100, 1350,
+   1650, 2000, 2400, 2900, 3500, 4200, 5000, 6000, 7500, 10000]
+
+# Credits cost to BUY each tier from the merchant
+tier-cost:
+  [5, 7, 9, 12, 15, 20, 26, 35, 46, 61,
+   80, 106, 139, 184, 242, 319, 421, 555, 731, 964,
+   1271, 1675, 2208, 2911, 3837, 5058, 6667, 8791, 11588, 15275]
+
+# "1 in N" odds per tier - tier 1 is 1-in-2 (50%), tier 30 is 1-in-50,000
+tier-odds:
+  [2, 3, 4, 6, 8, 12, 16, 23, 33, 47,
+   66, 94, 133, 188, 267, 379, 538, 763, 1083, 1537,
+   2180, 3090, 4384, 6218, 8818, 12513, 17754, 25182, 35712, 50000]
+
+# rarity band -> display color (matches RollEco.sk's geco_rarityColor)
+# and the display SCALE of the placed head for that band - this is
+# where "different sizes" comes from: rarer minions are visibly bigger.
+rarity-bands:
+  COMMON:      { max-tier: 5,  color: "&f", scale: 0.5 }
+  UNCOMMON:    { max-tier: 10, color: "&a", scale: 0.65 }
+  RARE:        { max-tier: 15, color: "&b", scale: 0.8 }
+  EPIC:        { max-tier: 20, color: "&d", scale: 1.0 }
+  LEGENDARY:   { max-tier: 25, color: "&6", scale: 1.25 }
+  MYTHIC:      { max-tier: 30, color: "&c", scale: 1.6 }
+
+# the 20 cosmetic minion types - name/color/texture only, every type
+# produces identical income at a given tier. "texture" is the
+# minecraft-heads.com base64 Value (leave blank for a default head).
+minion-types:
+  FARMER:      { name: "Farmer",      color: "&a", texture: "" }
+  HARVESTER:   { name: "Harvester",   color: "&6", texture: "" }
+  GREENHOUSE:  { name: "Greenhouse",  color: "&2", texture: "" }
+  ORCHARD:     { name: "Orchard",     color: "&c", texture: "" }
+  MINER:       { name: "Miner",       color: "&7", texture: "" }
+  BANKER:      { name: "Banker",      color: "&6", texture: "" }
+  MILLIONAIRE: { name: "Millionaire", color: "&a", texture: "" }
+  STOCK:       { name: "Stock",       color: "&f", texture: "" }
+  FISHER:      { name: "Fisher",      color: "&b", texture: "" }
+  FORTUNE:     { name: "Fortune",     color: "&d", texture: "" }
+  GAMBLER:     { name: "Gambler",     color: "&5", texture: "" }
+  CLOVER:      { name: "Clover",      color: "&2", texture: "" }
+  MOB:         { name: "Mob",         color: "&c", texture: "" }
+  HUNTER:      { name: "Hunter",      color: "&2", texture: "" }
+  WARRIOR:     { name: "Warrior",     color: "&f", texture: "" }
+  SLAYER:      { name: "Slayer",      color: "&8", texture: "" }
+  SCHOLAR:     { name: "Scholar",     color: "&b", texture: "" }
+  SAGE:        { name: "Sage",        color: "&d", texture: "" }
+  ENCHANTER:   { name: "Enchanter",   color: "&9", texture: "" }
+  PROFESSOR:   { name: "Professor",   color: "&e", texture: "" }

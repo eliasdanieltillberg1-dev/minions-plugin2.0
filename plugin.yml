@@ -1,0 +1,21 @@
+name: Minions
+version: '1.0.0'
+main: com.rolleco.minions.MinionsPlugin
+api-version: '1.21'
+author: rolleco
+description: Placeable Minions (real scaled player-head displays) + the /merchant shop, bridged into the existing Skript Credits/Money economy.
+softdepend: [Skript]
+
+commands:
+  merchant:
+    description: Opens the Minion merchant shop.
+    permission: rolleco.admin
+    usage: /merchant
+  minionsreload:
+    description: Reloads config.yml (e.g. after pasting in head textures) without restarting.
+    permission: rolleco.admin
+    usage: /minionsreload
+
+permissions:
+  rolleco.admin:
+    default: op
